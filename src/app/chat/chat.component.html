@@ -1,7 +1,7 @@
-<div class="container">
+<!-- <div class="container">
   <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white" style="width: 380px;">
     <div class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
-      <input type="text" class="fs-5 fw-semibold" [(ngModel)]="username">
+      AI PROMPT
     </div>
     <div class="list-group list-group-flush border-bottom scrollarea">
       <div class="list-group-item list-group-item-action py-3 lh-tight" *ngFor="let msg of messages">
@@ -15,4 +15,70 @@
       <input type="text" class="form-control" name="message" [(ngModel)]="message" placeholder="write a message" (keydown)="handleKeyPress($event)">
       <button type="button" (click)="sendMessage()">Send</button>
     </form>
+  </div> -->
+
+<!-- V2 -->
+<div class="container">
+  <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white" style="width: 380px;">
+    <div class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
+      AI PROMPT
+    </div>
+    <div class="list-group list-group-flush border-bottom scrollarea">
+      <div class="list-group-item list-group-item-action py-3 lh-tight" 
+           *ngFor="let msg of messages"
+           [ngClass]="{'text-end': msg.isUser, 'text-start': !msg.isUser}">
+        <div class="d-flex w-100 align-items-center" 
+             [ngClass]="{'justify-content-end': msg.isUser, 'justify-content-start': !msg.isUser}">
+           <!-- <strong class="mb-1">{{ msg.isUser ? username : 'X-Brain' }}</strong> -->
+        </div>
+        <div class="mb-1 small d-inline-block" 
+             [ngClass]="{'text-end': msg.isUser, 'text-start': !msg.isUser}"
+             style="max-width: 80%;">
+          {{msg.content}}
+        </div>
+      </div>
+    </div>
+    <form action="">
+      <input type="text" class="form-control" name="message" [(ngModel)]="message" placeholder="write a message" (keydown)="handleKeyPress($event)">
+       <button class="btn-toggle" id="toggleBtn" onclick="togglePTTEP()">
+                    <span class="toggle-switch">
+                        <span class="toggle-slider"></span>
+                    </span>
+                    Connect PTTEP Documents
+                </button>
+      <button type="button" (click)="sendMessage()">Send</button>
+    </form>
   </div>
+</div>
+<!-- 
+    <div class="chat-container">
+        <div class="chat-header">     
+        </div>
+
+        <div class="messages-container" id="messagesContainer">
+        </div>
+
+        <div class="selected-files" id="selectedFiles" style="display: none;">
+        </div>
+
+        <div class="input-container">
+            <textarea
+                id="messageInput"
+                placeholder="Type your message..."
+                rows="1"
+                class="message-input"
+                onkeypress="handleKeyPress(event)"></textarea>
+
+                <button class="btn-toggle" id="toggleBtn" onclick="togglePTTEP()">
+                    <span class="toggle-switch">
+                        <span class="toggle-slider"></span>
+                    </span>
+                    Connect PTTEP Documents
+                </button>
+            <button class="btn-send" onclick="sendMessage()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+        </div>
+    </div> -->

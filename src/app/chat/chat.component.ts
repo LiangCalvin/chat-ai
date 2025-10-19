@@ -47,33 +47,6 @@ export class ChatComponent implements OnInit {
     });
   }
 
-  // submit(): void {
-  //   this.http.post('http://localhost:3000/api/messages', 
-  //     {
-  //       username: this.username,
-  //       message: this.message
-  //     }
-  //   ).subscribe((res)=> this.message)
-  // }
-// submit(): void {
-//   if (!this.message.trim()) return; // prevent sending empty message
-
-//   const msg = {
-//     id: crypto.randomUUID(),     // generate unique ID on frontend
-//     content: this.message.trim(),
-//     isUser: true,
-//     timestamp: new Date()
-//   };
-
-//   this.chatService.sendMessage(msg).subscribe({
-//     next: (response) => {
-//       console.log('Message sent:', response);
-//       this.message = ''; // clear input box
-//     },
-//     error: (err) => console.error('Send error:', err)
-//   });
-// }
-
   loadMessages() {
   this.chatService.getMessages().subscribe({
       next: (messages) => {
@@ -84,85 +57,41 @@ export class ChatComponent implements OnInit {
     });
   }
 
-  // sendMessage() {
-  //   console.log("send")
-  //   // if (!this.currentMessage.trim() && this.selectedFiles.length === 0) {
-  //   //   return;
-  //   // }
+  sendMessage() {
+    if (!this.message.trim()) return; // no empty messages
 
-  //   const newMessage: Message = {
-  //     id: this.generateId(),
-  //     content: this.message.trim(),
-  //     isUser: true,
-  //     timestamp: new Date(),
-  //     connectPTTEP: this.isConnectPTTEP ? true : undefined
-  //   };
+    const newMessage: Message = {
+      id: this.generateId(),
+      content: this.message.trim(),
+      isUser: true,
+      timestamp: new Date(),
+      connectPTTEP: this.isConnectPTTEP ? true : undefined
+    };
 
-  //   // Add user message immediately
-  //   this.messages.push(newMessage);
-  //   this.scrollToBottom();
+    // this.messages.push(newMessage);
+    this.scrollToBottom();
 
-  //   // const messageToSend = {
-  //   //   content: this.currentMessage,
-  //   //   connectPTTEP: this.isConnectPTTEP,
-  //   // };
+    this.isLoading = true;
+    this.message = '';
 
-  //   this.isLoading = true;
-  //   this.currentMessage = '';
-  //   this.selectedFiles = [];
-
-  //   this.chatService.sendMessage(newMessage).subscribe({
-  //     next: (response) => {
-  //       this.messages.push({
-  //         id: this.generateId(),
-  //         content: response.content,
-  //         isUser: false,
-  //         timestamp: new Date()
-  //       });
-  //       this.isLoading = false;
-  //       this.scrollToBottom();
-  //     },
-  //     error: (error) => {
-  //       console.error('Error sending message:', error);
-  //       this.isLoading = false;
-  //     }
-  //   });
-  // }
-sendMessage() {
-  if (!this.message.trim()) return; // no empty messages
-
-  const newMessage: Message = {
-    id: this.generateId(),
-    content: this.message.trim(),
-    isUser: true,
-    timestamp: new Date(),
-    connectPTTEP: this.isConnectPTTEP ? true : undefined
-  };
-
-  // this.messages.push(newMessage);
-  this.scrollToBottom();
-
-  this.isLoading = true;
-  this.message = '';
-
-  this.chatService.sendMessage(newMessage).subscribe({
-    next: (response) => {
-      // this.messages.push({
-      //   id: this.generateId(),
-      //   content: response.content,
-      //   isUser: false,
-      //   timestamp: new Date(),
-      //   connectPTTEP: response.connectPTTEP ?? false
-      // });
-      this.isLoading = false;
-      this.scrollToBottom();
-    },
-    error: (error) => {
-      console.error('Error sending message:', error);
-      this.isLoading = false;
-    }
-  });
-}
+    this.chatService.sendMessage(newMessage).subscribe({
+      next: (response) => {
+        // this.messages.push({
+        //   id: this.generateId(),
+        //   content: response.content,
+        //   isUser: false,
+        //   timestamp: new Date(),
+        //   connectPTTEP: response.connectPTTEP ?? false
+        // });
+        this.isLoading = false;
+        this.scrollToBottom();
+      },
+      error: (error) => {
+        console.error('Error sending message:', error);
+        this.isLoading = false;
+      }
+    });
+  }
 
   onFileSelect(event: Event) {
     const input = event.target as HTMLInputElement;
